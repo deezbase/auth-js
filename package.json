@@ -1,7 +1,7 @@
 {
     "name": "@deezbase/auth-js",
     "publishConfig": { "access": "public" },
-    "version": "2.64.2",
+    "version": "2.64.4",
     "private": false,
     "description": "Official client library for Supabase Auth",
     "keywords": [

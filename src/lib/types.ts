@@ -3,27 +3,28 @@ import { Fetch } from './fetch'
 
 /** One of the providers supported by GoTrue. */
 export type Provider =
-  | 'apple'
-  | 'azure'
-  | 'bitbucket'
-  | 'discord'
-  | 'facebook'
-  | 'figma'
-  | 'github'
-  | 'gitlab'
-  | 'google'
-  | 'kakao'
-  | 'keycloak'
-  | 'linkedin'
-  | 'linkedin_oidc'
-  | 'notion'
-  | 'slack'
-  | 'spotify'
-  | 'twitch'
-  | 'twitter'
-  | 'workos'
-  | 'zoom'
-  | 'fly'
+| 'apple'
+| 'azure'
+| 'bitbucket'
+| 'discord'
+| 'facebook'
+| 'figma'
+| 'github'
+| 'gitlab'
+| 'google'
+| 'kakao'
+| 'keycloak'
+| 'linkedin'
+| 'linkedin_oidc'
+| 'notion'
+| 'slack'
+| 'slack_oidc'
+| 'spotify'
+| 'twitch'
+| 'twitter'
+| 'workos'
+| 'zoom'
+| 'fly'
 
 export type AuthChangeEventMFA = 'MFA_CHALLENGE_VERIFIED'
 
@@ -129,7 +130,7 @@ export type AuthResponsePassword =
 /**
  * AuthOtpResponse is returned when OTP is used.
  *
- * {@see AuthRsponse}
+ * {@see AuthResponse}
  */
 export type AuthOtpResponse =
   | {
@@ -381,7 +382,7 @@ export interface UserAttributes {
 }
 
 export interface AdminUserAttributes extends Omit<UserAttributes, 'data'> {
-  /**
+    /**
    * A custom data object to store the user's metadata. This maps to the `auth.users.raw_user_meta_data` column.
    *
    *
@@ -391,9 +392,9 @@ export interface AdminUserAttributes extends Omit<UserAttributes, 'data'> {
    * this attribute is used instead of UserAttributes data.
    *
    */
-  user_metadata?: object
+    user_metadata?: object
 
-  /**
+    /**
    * A custom data object to store the user's application specific metadata. This maps to the `auth.users.app_metadata` column.
    *
    * Only a service role can modify.
@@ -401,23 +402,23 @@ export interface AdminUserAttributes extends Omit<UserAttributes, 'data'> {
    * The `app_metadata` should be a JSON object that includes app-specific info, such as identity providers, roles, and other
    * access control information.
    */
-  app_metadata?: object
+    app_metadata?: object
 
-  /**
+    /**
    * Confirms the user's email address if set to true.
    *
    * Only a service role can modify.
    */
-  email_confirm?: boolean
+    email_confirm?: boolean
 
-  /**
+    /**
    * Confirms the user's phone number if set to true.
    *
    * Only a service role can modify.
    */
-  phone_confirm?: boolean
+    phone_confirm?: boolean
 
-  /**
+    /**
    * Determines how long a user is banned for.
    *
    * The format for the ban duration follows a strict sequence of decimal numbers with a unit suffix.
@@ -427,16 +428,32 @@ export interface AdminUserAttributes extends Omit<UserAttributes, 'data'> {
    *
    * Setting the ban duration to 'none' lifts the ban on the user.
    */
-  ban_duration?: string | 'none'
+    ban_duration?: string | 'none'
 
-  /**
+    /**
    * The `role` claim set in the user's access token JWT.
    *
    * When a user signs up, this role is set to `authenticated` by default. You should only modify the `role` if you need to provision several levels of admin access that have different permissions on individual columns in your database.
    *
    * Setting this role to `service_role` is not recommended as it grants the user admin privileges.
    */
-  role?: string
+    role?: string
+
+    /**
+   * The `password_hash` for the user's password.
+   *
+   * Allows you to specify a password hash for the user. This is useful for migrating a user's password hash from another service.
+   *
+   * Supports bcrypt and argon2 password hashes.
+   */
+    password_hash?: string
+
+    /**
+   * The `id` for the user.
+   *
+   * Allows you to overwrite the default `id` set for the user.
+   */
+    id?: string
 }
 
 export interface Subscription {
